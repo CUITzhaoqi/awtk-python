@@ -1,5 +1,13 @@
-from awtk import *
 
+import os
+import sys
+CWD=os.getcwd()
+print(CWD)
+AWTK_PYTHON_ROOT=os.path.normpath(os.path.join(CWD, '../src/python'));
+sys.path.insert(0, CWD);
+sys.path.insert(0, './demos');
+sys.path.insert(0, AWTK_PYTHON_ROOT);
+from awtk import *
 def on_clicked(win, e):
     evt = TEvent.cast(e);
     btn = TWidget.cast(evt.target);
@@ -21,7 +29,14 @@ def application_init():
     btn.set_self_layout_params("center", "middle", "50%", "30");
     btn.on(TEventType.CLICK, on_clicked, win);
 
+    # as = TAssetsManager.instance();
+
     print(win.lookup("close", 100).name)
     win.layout();
 
+
+# TGlobal.init(800, 480, TAppType.DESKTOP, "test", "../")
+TAssetsManager.set_theme(TAssetsManager.instance(), theme="default")
+# TAssetsManager.add(TAssetsManager.instance(),info="test")
 application_init()
+TGlobal.run()

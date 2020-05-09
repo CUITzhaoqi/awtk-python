@@ -2029,6 +2029,15 @@ class TAssetsManager(object):
   def unref(self, info): 
     return assets_manager_unref(awtk_get_native_obj(self), awtk_get_native_obj(info));
 
+  #
+  # 释放指定的资源。
+  #
+  # @param info 资源。
+  #
+  # @return 返回RET_OK表示成功，否则表示失败。
+  #
+  def add(self, info):
+    return assets_manager_add(awtk_get_native_obj(self), awtk_get_native_obj(info));
 
 #
 # 图片管理器。负责加载，解码和缓存图片。

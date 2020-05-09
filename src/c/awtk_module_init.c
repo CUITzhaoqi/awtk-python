@@ -51,7 +51,12 @@ void initawtk_native(void)
 #else
   PyObject *module = Py_InitModule("awtk_native", awtk_methods);
 #endif
-
+//extern int test_init();
+//  test_init();
+  log_warn("test\n");
+  tk_init(800, 480, APP_SIMULATOR, "test", "../");
+//  system_info_set_default_font(system_info(), "default");
+  assets_init();
   if (module == NULL)
     INITERROR;
   struct module_state *st = GETSTATE(module);

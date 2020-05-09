@@ -23,7 +23,9 @@ static ret_t assets_init_internal(const char* theme) {
 
   assets_manager_set_theme(am, theme);
 
+log_debug("ttttttttt\n");
   if (tk_str_eq(theme, "default")) {
+    log_debug("ttttttttt2222\n");
     return assets_init_default();
   } else {
     log_debug("%s not support.\n", theme);
