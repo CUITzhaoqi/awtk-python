@@ -1419,6 +1419,23 @@ pyobject_t wrap_tk_init(pyobject_t self, pyobject_t pyargs) {
   return Py_BuildValue("i", ret);
 }
 
+pyobject_t wrap_assets_init(pyobject_t self, pyobject_t pyargs) {
+  ret_t ret = 0;
+  wh_t w = 0;
+  wh_t h = 0;
+  app_type_t app_type = 0;
+  const char* app_name = NULL;
+  const char* app_root = NULL;
+
+  if (!PyArg_ParseTuple(pyargs, "" )) {
+    PyErr_SetString(PyExc_TypeError, "invalid arguments");
+    return NULL;
+  }
+
+  ret = assets_init();
+  return Py_BuildValue("i", ret);
+}
+
 pyobject_t wrap_tk_run(pyobject_t self, pyobject_t pyargs) {
   ret_t ret = 0;
 
@@ -16094,6 +16111,7 @@ static PyMethodDef awtk_methods[] = {
 {"object_t_get_prop_ref_count", wrap_object_t_get_prop_ref_count, METH_VARARGS, "object_t_get_prop_ref_count"},
 {"object_t_get_prop_name", wrap_object_t_get_prop_name, METH_VARARGS, "object_t_get_prop_name"},
 {"tk_init", wrap_tk_init, METH_VARARGS, "tk_init"},
+{"assets_init", wrap_assets_init, METH_VARARGS, "assets_init"},
 {"tk_run", wrap_tk_run, METH_VARARGS, "tk_run"},
 {"tk_quit", wrap_tk_quit, METH_VARARGS, "tk_quit"},
 {"system_info_init", wrap_system_info_init, METH_VARARGS, "system_info_init"},

@@ -8,6 +8,8 @@ sys.path.insert(0, CWD);
 sys.path.insert(0, './demos');
 sys.path.insert(0, AWTK_PYTHON_ROOT);
 from awtk import *
+
+
 def on_clicked(win, e):
     evt = TEvent.cast(e);
     btn = TWidget.cast(evt.target);
@@ -16,6 +18,20 @@ def on_clicked(win, e):
     print('click at x=' + str(p.x) + " y=" + str(p.y));
     print('click:' + btn.get_text() + ' in ' + win.name);
     TGlobal.quit()
+
+    return TRet.OK;
+
+def on_test_add(win, e):
+    evt = TEvent.cast(e);
+    btn = TWidget.cast(evt.target);
+    p = TPointerEvent.cast(e);
+
+    print('click at x=' + str(p.x) + " y=" + str(p.y));
+    print('click:' + btn.get_text() + ' in ' + win.name);
+    test = 1
+
+    test = test + 1
+    btn.set_text(str(test))
 
     return TRet.OK;
 
@@ -29,14 +45,20 @@ def application_init():
     btn.set_self_layout_params("center", "middle", "50%", "30");
     btn.on(TEventType.CLICK, on_clicked, win);
 
+    btn1 = TButton.create(win, 0, 0, 0, 0);
+    btn1.set_name("test");
+    btn1.set_text("Test");
+    btn1.set_self_layout_params("center", "middle:50", "50%", "30");
+    btn1.on(TEventType.CLICK, on_test_add, win);
     # as = TAssetsManager.instance();
 
     print(win.lookup("close", 100).name)
     win.layout();
 
 
-# TGlobal.init(800, 480, TAppType.DESKTOP, "test", "../")
+TGlobal.init(800, 480, TAppType.DESKTOP, "test", "../")
 TAssetsManager.set_theme(TAssetsManager.instance(), theme="default")
+TGlobal.assets_init()
 # TAssetsManager.add(TAssetsManager.instance(),info="test")
 application_init()
 TGlobal.run()

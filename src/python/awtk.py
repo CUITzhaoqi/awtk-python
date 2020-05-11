@@ -1243,6 +1243,16 @@ class TGlobal(object):
   def init(cls, w, h, app_type, app_name, app_root): 
     return tk_init(w, h, app_type, app_name, app_root);
 
+  #
+  # assets_init
+  #
+  #
+  # @return 返回RET_OK表示成功，否则表示失败。
+  #
+  @classmethod
+  def assets_init(cls):
+    assets_init();
+
 
   #
   # 进入TK事件主循环。

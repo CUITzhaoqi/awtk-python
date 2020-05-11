@@ -1,35 +1,35 @@
 from awtk import *
+import os
+import sys
+CWD=os.getcwd()
+print(CWD)
+AWTK_PYTHON_ROOT=os.path.normpath(os.path.join(CWD, 'src/python'));
+sys.path.insert(0, CWD);
+sys.path.insert(0, './demos');
+sys.path.insert(0, AWTK_PYTHON_ROOT);
 
 def on_clicked(win, e):
-    TGlobal.quit();
-    return TRet.OK;
-
-def on_edit_changed(win, e):
     evt = TEvent.cast(e);
-    edit = TWidget.cast(evt.target);
-    print("text changed:" + edit.get_text());
+    btn = TWidget.cast(evt.target);
+    p = TPointerEvent.cast(e);
+
+    print('click at x=' + str(p.x) + " y=" + str(p.y));
+    print('click:' + btn.get_text() + ' in ' + win.name);
+    TGlobal.quit()
 
     return TRet.OK;
 
 def application_init():
     win = TWindow.create_default()
     btn = TButton.create(win, 0, 0, 0, 0);
-    edit = TEdit.create(win, 0, 0, 0, 0);
-    mledit = TMledit.create(win, 0, 0, 0, 0);
 
-    edit.set_input_tips("title");
-    edit.set_self_layout_params("10", "10", "50%", "30");
-    edit.on(TEventType.VALUE_CHANGED, on_edit_changed, win);
-
-    mledit.set_input_tips("content");
-    mledit.set_self_layout_params("10", "50", "-20", "-120");
-    mledit.on(TEventType.VALUE_CHANGED, on_edit_changed, win);
-
+    win.set_name("main");
     btn.set_name("close");
     btn.set_text("Close");
-    btn.set_self_layout_params("center", "bottom:20", "50%", "30");
+    btn.set_self_layout_params("center", "middle", "50%", "30");
     btn.on(TEventType.CLICK, on_clicked, win);
 
+    print(win.lookup("close", 100).name)
     win.layout();
 
 application_init()
