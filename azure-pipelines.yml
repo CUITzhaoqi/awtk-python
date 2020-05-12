@@ -24,5 +24,6 @@ steps:
 - script: |
     pip install scons
     git clone https://github.com/zlgopen/awtk.git build/awtk
-    cd build/awtk&scons -j8
+    dir
+#    cd build/awtk&scons -j8
   displayName: 'build-awtk'
