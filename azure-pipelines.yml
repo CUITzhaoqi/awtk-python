@@ -22,7 +22,7 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    pip install -r requirements.txt
+    pip install scons
     git clone https://github.com/zlgopen/awtk.git build/awtk
     cd build/awtk&scons -j8
   displayName: 'build-awtk'
