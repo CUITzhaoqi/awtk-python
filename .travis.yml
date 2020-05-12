@@ -1,0 +1,52 @@
+language: python
+
+jobs:
+  include:
+    - name: "Python 3.8.0 on Xenial Linux"
+      python: 3.8           # this works for Linux but is ignored on macOS or Windows
+      sudo: required
+      install:
+        - sudo apt-get install scons libsndio-dev libgtk-3-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev libasound2-dev git vim clang-format
+        - pip install -r requirements.txt
+      script:
+        - cd build/awtk && scons -j8 && cd ../../
+        - python setup.py install
+    - name: "Python 2.7 on Xenial Linux"
+      python: 2.7           # this works for Linux but is ignored on macOS or Windows
+      sudo: required
+      install:
+        - sudo apt-get install scons libsndio-dev libgtk-3-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev libasound2-dev git vim clang-format
+        - pip install -r requirements.txt
+      script:
+        - cd build/awtk && scons -j8 && cd ../../
+        - python setup.py install
+    - name: "Python 3.7.4 on macOS"
+      os: osx
+      osx_image: xcode11.2  # Python 3.7.4 running on macOS 10.14.4
+      language: shell       # 'language: python' is an error on Travis CI macOS
+      sudo: required
+      install:
+        - brew install scons sdl2
+        - pip install --user -r requirements.txt
+      script:
+        - cd build/awtk && scons -j8 && cd ../../
+        - python setup.py install
+#    - name: "Python 3.8.0 on Windows"
+#      os: windows           # Windows 10.0.17134 N/A Build 17134
+#      language: shell       # 'language: python' is an error on Travis CI Windows
+#      before_install:
+#        - choco install python --version 3.8.0
+#        - python -m pip install --upgrade pip
+#      install:
+#        - git clone https://github.com/zlgopen/awtk.git build/awtk
+#        - pip install -r requirements.txt
+#      script:
+#        - cd build\awtk&scons -j8
+#        - python setup.py install
+#      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
+
+before_install:
+  - git clone https://github.com/zlgopen/awtk.git build/awtk
+
+after_success:
+  - ls

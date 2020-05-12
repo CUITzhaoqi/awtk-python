@@ -1,9 +1,9 @@
 import sys
-import re
 from distutils.core import setup, Extension
 
 print(sys.executable)
 sys.path.insert(0, '../awtk/')
+sys.path.insert(0, 'build/awtk/')
 import awtk_config as awtk
 
 include_dirs = awtk.CPPPATH
@@ -14,82 +14,42 @@ print (extra_compile_args.split( ))
 
 extra_compile_args_list = extra_compile_args.split( )
 
+extra_define_macros = []
+
 for i in extra_compile_args_list:
+    if i.find("-D", 0, len(i) - 1) >= 0:
+        equal_index = i.find("=", 0, len(i) - 1)
+        if equal_index > 0 :
+            macros = (i[2:equal_index], i[equal_index + 1:len(i)])
+            extra_define_macros.append(macros)
+            pass
+        else:
+            macros = (i[2:len(i)], None)
+            extra_define_macros.append(macros)
+
+print(extra_define_macros)
+
+extra_lib = []
+library_dirs=awtk.LIBPATH
+extra_libraries=awtk.LIBS
+for i in extra_libraries:
     print(i)
+    lib_index = i.find(".lib", 0, len(i))
+    if lib_index > 0:
+        print(lib_index)
+        extra_lib.append(i[0:lib_index])
+    else :
+        extra_lib.append(i)
 
-    searchObj = re.match('\S[-D]', 'i')
-    if searchObj :
-        print(searchObj)
-    else:
-        print("Nothing found!!")
+print(extra_lib)
 
-
-
-# # define_macros =
-# extra_define_macros = [
-# ("WIN32",None),
-# ("_WIN32 ",None),
-# ("WINDOWS ",None),
-# ("WITH_ASSET_LOADER",None),
-# ("WITH_FS_RES",None),
-# ("WITH_ASSET_LOADER_ZIP",None),
-# ("STBTT_STATIC",None),
-# ("STB_IMAGE_STATIC",None),
-# ("WITH_STB_IMAGE",None),
-# ("WITH_VGCANVAS",None),
-# ("WITH_UNICODE_BREAK",None),
-# ("WITH_DESKTOP_STYLE",None),
-# ("SDL2",None),
-# ("HAS_STD_MALLOC",None),
-# ("WITH_SDL",None),
-# ("HAS_STDIO",None),
-# ("HAVE_STDIO_H",None),
-# ("WITH_IME_PINYIN",None),
-# ("WITH_NANOVG_GPU",None),
-# ("WITH_VGCANVAS_LCD",None),
-# ("WITH_STB_FONT",None),
-# ("WITH_NANOVG_GLES2",None),
-# ("WITH_NANOVG_GL",None),
-# ("_WIN64",None),
-# ("SDL_REAL_API",None),
-# ("SDL_HAPTIC_DISABLED",None),
-# ("SDL_SENSOR_DISABLED",None),
-# ("SDL_JOYSTICK_DISABLED",None),
-# ("__STDC_LIMIT_MACROS",None),
-# ("__STDC_FORMAT_MACROS",None),
-# ("__STDC_CONSTANT_MACROS",None),
-# ("_HAS_EXCEPTIONS","0"),
-# ("_HAS_ITERATOR_DEBUGGING","0"),
-# ("_ITERATOR_DEBUG_LEVEL","0"),
-# ("_SCL_SECURE","0"),
-# ("_SECURE_SCL","0"),
-# ("_SCL_SECURE_NO_WARNINGS",None),
-# ("_CRT_SECURE_NO_WARNINGS",None),
-# ("_CRT_SECURE_NO_DEPRECATE",None),
-#                        ]
-#
-# library_dirs=awtk.LIBPATH
-# print(library_dirs)
-# libraries=awtk.LIBS
-# # libraries.remove("winmm.lib")
-# # libraries.remove("imm32.lib")
-# # libraries.remove("version.lib")
-# # libraries.remove("shell32.lib")
-# # libraries.remove("ole32.lib")
-# # libraries.remove("Oleaut32.lib")
-# # libraries.remove("Advapi32.lib")
-# # libraries.remove("DelayImp.lib")
-# # libraries.remove("psapi.lib")
-#
-# print(libraries)
-#
-# setup(name="awtk", version="0.0.1",
-#       ext_modules=[Extension("awtk_native",
-#                              ["src/c/awtk_native.c",
-#                               "src/assets.c"],
-#                              include_dirs=include_dirs,
-#                              # extra_compile_args=extra_compile_args,
-#                              define_macros=extra_define_macros,
-#                              library_dirs=library_dirs,
-#                              libraries=libraries,
-#                              )])
+setup(name="awtk", version="0.0.1",
+      ext_modules=[Extension("awtk_native",
+                             ["src/c/awtk_native.c",
+                              "src/assets.c"],
+                             include_dirs=include_dirs,
+                             # extra_compile_args=extra_compile_args,
+                             define_macros=extra_define_macros,
+                             library_dirs=library_dirs,
+                             libraries=extra_lib,
+                             )])
