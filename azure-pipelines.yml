@@ -28,3 +28,7 @@ steps:
     dir
     python.exe setup.py install
   displayName: 'build-awtk'
+
+- script: |
+    python.exe setup.py install
+  displayName: 'package awtk-python'
