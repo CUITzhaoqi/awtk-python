@@ -1244,7 +1244,7 @@ class TGlobal(object):
     return tk_init(w, h, app_type, app_name, app_root);
 
   #
-  # assets_init
+  # 资源初始化
   #
   #
   # @return 返回RET_OK表示成功，否则表示失败。
@@ -1253,6 +1253,16 @@ class TGlobal(object):
   def assets_init(cls):
     assets_init();
 
+
+  #
+  # assets_init
+  #
+  #
+  # @return 返回RET_OK表示成功，否则表示失败。
+  #
+  @classmethod
+  def ext_widgets_init(cls):
+    tk_ext_widgets_init();
 
   #
   # 进入TK事件主循环。

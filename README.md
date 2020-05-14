@@ -11,7 +11,7 @@ ZLG 开源 GUI 引擎 [awtk](https://github.com/zlgopen/awtk) 针对 Python [Pyt
 
 [![Build status](https://travis-ci.com/CUITzhaoqi/awtk-python.svg?branch=master)](https://travis-ci.com/github/CUITzhaoqi/awtk-python/)
 [![License](https://img.shields.io/badge/license-GPL%20V2-blue.svg?longCache=true)](https://www.gnu.org/licenses/gpl-2.1.en.html)
-[![License](https://img.shields.io/badge/platform-linux--64%20%7C%20win--32%20%7C%20osx--64%20%7C%20win--64-lightgrey)]()
+[![Platform](https://img.shields.io/badge/platform-linux--64%20%7C%20win--32%20%7C%20osx--64%20%7C%20win--64-lightgrey)]()
 
 
 ## 准备
@@ -42,15 +42,10 @@ scons
 1. 获取 awtk 并编译
 
 ```
-git clone https://github.com/zlgopen/awtk.git build/awtk
-cd awtk; scons; cd -
-```
-
-> AWTK 的编译环境请参考 AWTK 的文档。
-
-```
 git clone https://github.com/CUITzhaoqi/awtk-python.git
 cd awtk-python
+git clone https://github.com/zlgopen/awtk.git build/awtk
+cd build/awtk; scons; cd ../../
 python setup.py install
 ```
 
@@ -71,7 +66,7 @@ python setup.py install
 ### 方式二
 
 ```
-python demos/button.py
+python main.py
 ```
 
 ## 更新绑定(由本项目的维护人员完成)
@@ -139,7 +134,6 @@ sys.path.insert(0, './demos')
 sys.path.insert(0, './')
 sys.path.insert(0, AWTK_PYTHON_ROOT)
 from awtk import *
-from basic import *
 
 def on_clicked(win, e):
     evt = TEvent.cast(e)
@@ -191,12 +185,40 @@ TGlobal.run()
 
 ## 使用限制
 
-### 方式一
+### 方式一 (不推荐使用)
 
 - 目前不能进行调试
-- 适合开发完成之后，发布应用
 
-### 方式一
+### 方式二
 
 - 可以进行调试
 - 目前不太完善
+
+## 发布应用
+
+### 生成可执行文件
+
+```
+pyinstaller -F main.py --hidden-import awtk_native
+```
+
+生成的可执行文件在当前目录下的 `dist` 目录下
+
+### windows 生成安装包
+
+:TODO
+
+### linux deb
+
+:TODO
+
+### macos dmg
+
+:TODO
+
+## 运行截图
+
+### win
+
+
+[![AWTK_PYTHON_DEMO](./doc/img/awtk_python_demo.png)]()
