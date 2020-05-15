@@ -1,4 +1,12 @@
 from awtk import *
+import os
+import sys
+CWD=os.getcwd()
+print(CWD)
+AWTK_PYTHON_ROOT=os.path.normpath(os.path.join(CWD, 'src/python'));
+sys.path.insert(0, CWD);
+sys.path.insert(0, './demos');
+sys.path.insert(0, AWTK_PYTHON_ROOT);
 
 def on_clicked(win, e):
     evt = TEvent.cast(e);

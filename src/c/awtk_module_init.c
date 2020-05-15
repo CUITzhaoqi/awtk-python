@@ -51,6 +51,7 @@ void initawtk_native(void)
 #else
   PyObject *module = Py_InitModule("awtk_native", awtk_methods);
 #endif
+
   if (module == NULL)
     INITERROR;
   struct module_state *st = GETSTATE(module);
