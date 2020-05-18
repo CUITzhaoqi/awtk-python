@@ -427,3 +427,5 @@ def application_init():
     print("id = " + str(id))
     win.layout();
 
+
+application_init()
